@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Add Recipe</title>
+  </head>
+  <body>
+    <h1>Add a Recipe</h1>
+    <form action="/recipes" method="POST">
+
+      <label>New Recipe Name:</label><br>
+      <input type="text" name="recipe_name">
+      <br></br>
+
+      <label>Ingredients:</label><br>
+      <input type="text" name="ingredients">
+      <br></br>
+
+      <label>Instructions:</label><br>
+      <input type="text" name="instructions">
+      <br></br>
+
+      <label>Category:</label><br>
+      <% if Category.all.empty? %>
+        <p> You currently have no categories saved. Please create a new category below. </p><br>
+      <% else %>
+        <p>Select category for recipe:</p>
+        <% Category.all.each do |category| %>
+          <input type="radio" name="category" value="<%= category.name %>">
+          <label><%= category.name %></label><br>
+        <% end %>
+      <% end %>
+      <p>Create new category:</p>
+      <input type="text" name="category">
+      <br></br>
+      <input type="submit" value="Create Recipe">
+    </form>
+  </body>
+</html>
