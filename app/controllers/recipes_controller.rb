@@ -19,13 +19,17 @@ class RecipesController < ApplicationController
 
   post '/recipes' do
     #if logged_in?
-      binding.pry
-      if params[:recipe_name] == "" || params[:category] == ""
+    binding.pry
+      if params[:recipe_name] == ""
         redirect to "/recipes/new"
       else
         #current_user.recipes
         @recipe = Recipe.new(name: params[:recipe_name], ingredients: params[:ingredients], instructions: params[:instructions])
-        @recipe.category = Category.find_or_create_by(name: params[:category])
+        if params[:new_category] == ""
+          @recipe.category_id = params[:category]
+        else
+          @recipe.category = Category.find_or_create_by(name: params[:new_category])
+        end
         if @recipe.save
           redirect to "/recipes/#{@recipe.id}"
         else
@@ -49,7 +53,7 @@ class RecipesController < ApplicationController
   get '/recipes/:id/edit' do
     #if logged_in?
       @recipe = Recipe.find(params[:id])
-      if @recipe && @recipe.user == current_user
+      if @recipe #&& @recipe.user == current_user
         erb :'recipes/edit'
       else
         redirect to '/recipes'
@@ -61,18 +65,25 @@ class RecipesController < ApplicationController
 
   patch '/recipes/:id' do
     #if logged_in?
-      if params[:content] == ""
-        redirect to "/tweets/#{params[:id]}/edit"
+    binding.pry
+      if params[:recipe_name] == ""
+        redirect to "/recipes/#{@recipe.id}/edit"
       else
-        @tweet = Tweet.find_by_id(params[:id])
-        if @tweet && @tweet.user == current_user
-          if @tweet.update(content: params[:content])
-            redirect to "/tweets/#{@tweet.id}"
+        @recipe = Recipe.find(params[:id])
+        if @recipe #&& @tweet.user == current_user
+          if @recipe.update(name: params[:recipe_name], ingredients: params[:ingredients], instructions: params[:instructions])
+            if params[:new_category] == ""
+              @recipe.category_id = params[:category]
+            else
+              @recipe.category = Category.find_or_create_by(name: params[:new_category])
+            end
+            @recipe.save
+            redirect to "/recipes/#{@recipe.id}"
           else
-            redirect to "/tweets/#{@tweet.id}/edit"
+            redirect to "/recipes/#{@recipe.id}/edit"
           end
         else
-          redirect to '/tweets'
+          redirect to '/recipes'
         end
       end
     #else
@@ -80,13 +91,13 @@ class RecipesController < ApplicationController
     #end
   end
 
-  delete '/tweets/:id/delete' do
+  delete '/recipes/:id/delete' do
     #if logged_in?
-      @tweet = Tweet.find_by_id(params[:id])
-      if @tweet && @tweet.user == current_user
-        @tweet.delete
+      @recipe = Recipe.find(params[:id])
+      if @recipe #&& @recipe.user == current_user
+        @recipe.delete
       end
-      redirect to '/tweets'
+      redirect to '/recipes'
     #else
       #redirect to '/login'
     #end

@@ -2,12 +2,27 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title><%=@recipe.name%></title>
   </head>
   <body>
-    <h1><%= @recipe.name %></h1>
-    <p><%= @recipe.ingredients %></p>
-    <p><%= @recipe.instructions %></p><br>
+    <h1><%= @recipe.name.titleize %></h1>
+    <h2>Category:</h2>
+    <p><%= @recipe.category.name.capitalize %></p>
+    <h2>Ingredients:</h2>
+    <p><%= @recipe.ingredients.capitalize %></p>
+    <h2>Instructions:</h2>
+    <p><%= @recipe.instructions.capitalize %></p><br>
+
+    <form method="get" action="/recipes/<%=@recipe.id%>/edit">
+      <input type="submit" value="Edit This Recipe">
+    </form><br>
+
+    <form method="post" action="/recipes/<%=@recipe.id%>/delete">
+      <input id="hidden" type="hidden" name="_method" value="DELETE">
+      <input type="submit" value="Delete Recipe">
+    </form><br>
+
+    <br></br>
+
     <a href="/recipes">Return to full list of recipes.</a>
     <br></br>
     <a href="/categories">Return to list of categories.</a>
