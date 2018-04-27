@@ -27,7 +27,7 @@
         <p>Select category for recipe:</p>
         <% Category.all.each do |category| %>
           <input type="radio" name="category" value="<%= category.id %>">
-          <label><%= category.name %></label><br>
+          <label><%= category.name.titleize %></label><br>
         <% end %>
       <% end %>
       <p>Create new category:</p>

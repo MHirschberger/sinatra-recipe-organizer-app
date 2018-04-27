@@ -2,7 +2,7 @@ class RecipesController < ApplicationController
 
   get '/recipes' do
     #if logged_in?
-      @recipes = Recipe.all.sort
+      @recipes = Recipe.all.sort_by {|recipe| recipe.name}
       erb :'recipes/index'
   #  else
       #redirect to '/login'
@@ -19,7 +19,6 @@ class RecipesController < ApplicationController
 
   post '/recipes' do
     #if logged_in?
-    binding.pry
       if params[:recipe_name] == ""
         redirect to "/recipes/new"
       else
@@ -65,7 +64,6 @@ class RecipesController < ApplicationController
 
   patch '/recipes/:id' do
     #if logged_in?
-    binding.pry
       if params[:recipe_name] == ""
         redirect to "/recipes/#{@recipe.id}/edit"
       else
