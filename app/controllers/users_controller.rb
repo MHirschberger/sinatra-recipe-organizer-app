@@ -1,14 +1,10 @@
 class UsersController < ApplicationController
-  # get '/users/:id' do
-  #   @user = User.find(params[:id])
-  #   erb :'users/show'
-  # end
-
+  
   get '/signup' do
     if !logged_in?
       erb :'users/signup', locals: {message: "Please sign up before you sign in"}
     else
-      redirect to '/welcome'
+      redirect to '/index'
     end
   end
 
@@ -19,7 +15,7 @@ class UsersController < ApplicationController
       @user = User.new(:username => params[:username], :email => params[:email], :password => params[:password])
       @user.save
       session[:user_id] = @user.id
-      redirect to '/recipes'
+      redirect to '/index'
     end
   end
 
@@ -27,7 +23,7 @@ class UsersController < ApplicationController
     if !logged_in?
       erb :'users/login'
     else
-      redirect '/recipes'
+      redirect '/index'
     end
   end
 
@@ -35,9 +31,18 @@ class UsersController < ApplicationController
     user = User.find_by(:username => params[:username])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect "/recipes"
+      redirect "/index"
     else
       redirect to '/signup'
+    end
+  end
+
+  get '/index' do
+    if logged_in?
+      @user = User.find(params[:id])
+      erb :'users/index'
+    else
+      redirect to '/login'
     end
   end
 
