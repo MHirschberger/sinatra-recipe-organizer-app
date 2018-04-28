@@ -8,7 +8,6 @@ class CategoriesController < ApplicationController
   get '/categories/:id' do
     #if logged_in?
       @category = Category.find(params[:id])
-      binding.pry
       erb :'categories/show'
     #else
       #redirect to '/login'

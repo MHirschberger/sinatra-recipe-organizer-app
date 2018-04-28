@@ -9,12 +9,13 @@
     <ul>
       <% @category.recipes.each do |recipe| %>
         <li><a href="/recipes/<%=recipe.id%>"><%= recipe.name.titleize %></a></li>
+        <% end %>
     </ul>
-    
+
     <br></br>
-    <a href="/categories">Return to list of categories.</a>
+    <a href="/categories">Return to list of categories</a>
     <br></br>
-    <a href="/recipes">See your full list of recipes.</a>
+    <a href="/recipes">View your full list of recipes</a>
 
   </body>
 </html>
