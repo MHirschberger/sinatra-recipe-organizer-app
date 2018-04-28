@@ -15,7 +15,9 @@
 </head>
 <body>
   <div class="wrapper">
-
+    <% if logged_in? %>
+      <p>Welcome, <%=current_user.name%>.      <a href "/logout">Log Out</a></p>
+    <% end %>
       <%= yield %>
 
   </div>
