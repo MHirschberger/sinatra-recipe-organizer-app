@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>Your Recipe Categories</h1>
+    <ul>
+      <% @categories.each do |category| %>
+        <li><a href="/categories/<%=category.id%>"><%= category.name.titleize %></a></li>
+      <% end %>
+    </ul>
+  </body>
+</html>
