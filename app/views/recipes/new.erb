@@ -8,7 +8,7 @@
     <h1>Add a Recipe</h1>
     <form action="/recipes" method="POST">
 
-      <label>New Recipe Name:</label><br>
+      <label>New Recipe Name</label><br>
       <input type="text" name="recipe_name">
       <br></br>
 
@@ -21,11 +21,11 @@
       <br></br>
 
       <label>Category</label><br>
-      <% if Category.all.empty? %>
+      <% if current_user.categories.empty? %>
         <p> You currently have no categories saved. Please create a new category below. </p><br>
       <% else %>
         <p>Select category for recipe:</p>
-        <% Category.all.each do |category| %>
+        <% current_user.categories.each do |category| %>
           <input type="radio" name="category" value="<%= category.id %>">
           <label><%= category.name.titleize %></label><br>
         <% end %>

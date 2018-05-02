@@ -26,7 +26,7 @@ class RecipesController < ApplicationController
         if params[:new_category] == ""
           @recipe.category_id = params[:category]
         else
-          @recipe.category = current_user.find_or_create_by(name: params[:new_category], user_id: current_user.id)
+          @recipe.category = Category.find_or_create_by(name: params[:new_category], user_id: current_user.id)
         end
         if @recipe.save
           redirect to "/recipes/#{@recipe.id}"
@@ -51,7 +51,7 @@ class RecipesController < ApplicationController
   get '/recipes/:id/edit' do
     if logged_in?
       @recipe = Recipe.find(params[:id])
-      if @recipe && @recipe.user == current_user
+      if @recipe && @recipe.category.user == current_user
         erb :'recipes/edit'
       else
         redirect to '/recipes'
@@ -67,20 +67,19 @@ class RecipesController < ApplicationController
         redirect to "/recipes/#{@recipe.id}/edit"
       else
         @recipe = current_user.recipes.find(params[:id])
-        if @recipe && @recipe.user == current_user
+        if @recipe && @recipe.category.user == current_user
           if @recipe.update(name: params[:recipe_name], ingredients: params[:ingredients], instructions: params[:instructions])
             if params[:new_category] == ""
               @recipe.category_id = params[:category]
             else
-              binding.pry
               @recipe.category = Category.find_or_create_by(name: params[:new_category], user_id: current_user.id)
             end
+            @recipe.save
             current_user.categories.each do |category|
               if category.recipes.empty?
                 current_user.categories.delete(category)
               end
             end
-            @recipe.save
             redirect to "/recipes/#{@recipe.id}"
           else
             redirect to "/recipes/#{@recipe.id}/edit"
@@ -97,8 +96,13 @@ class RecipesController < ApplicationController
   delete '/recipes/:id/delete' do
     if logged_in?
       @recipe = Recipe.find(params[:id])
-      if @recipe && @recipe.user == current_user
+      if @recipe && @recipe.category.user == current_user
         @recipe.delete
+        current_user.categories.each do |category|
+          if category.recipes.empty?
+            current_user.categories.delete(category)
+          end
+        end
       end
       redirect to '/recipes'
     else

@@ -25,7 +25,6 @@ recipes_data = [
     3. Brush olive oil on toast.
     4. Mash and spread avocado on toast.
     5. Top with salt and pepper to taste.',
-    user_id: 1,
     category_id: 1},
   {name: 'Vegetable Omelette',
     ingredients: '2 or 3 eggs
@@ -42,7 +41,6 @@ recipes_data = [
     6. Fold omelette and cook for 2 minutes.
     7. Flip folded omelette over and cook for additional 1-2 minutes.
     8. Add salt and pepper to taste.',
-    user_id: 1,
     category_id: 1},
   {name: 'Manhattan',
     ingredients: '2 oz. rye whiskey,
@@ -54,7 +52,6 @@ recipes_data = [
     3. Stir for 90 seconds.
     4. Strain into a martini glass.
     5. Garnish with cherries.',
-    user_id: 1,
     category_id: 2},
   {name: 'Cosmopolitan',
     ingredients: '1-1/2 oz. vodka,
@@ -66,7 +63,6 @@ recipes_data = [
     3. Shake well.
     4. Double strain into large cocktail glass.
     5. Garnish with lime wheel.',
-    user_id: 1,
     category_id: 2},
   {name: 'Grilled New York Strip',
     ingredients: '1 strip steak, 1 in. thick
@@ -77,7 +73,6 @@ recipes_data = [
     3. Coat grill with oil.
     4. Place steak on grill, grill over direct high heat for 4-5 minutes per side for medium-rare.
     5. Remove from grill. Let rest 5-10 minutes.',
-    user_id: 2,
     category_id: 3},
   {name: 'Summer Salad',
     ingredients: 'Arugula and baby spinich, rinsed and spun dry
@@ -88,7 +83,6 @@ recipes_data = [
     Balsamic vinegar',
     instructions: '1. Combine arugula, baby spinach, cheese, strawberries, and almonds
     2. Drizzle with olive oil and vinegar',
-    user_id: 2,
     category_id: 3},
   {name: 'Grilled Asparagus',
     ingredients: '1 bunch fresh asparagus, rinsed
@@ -98,7 +92,6 @@ recipes_data = [
     2. Brush asparagus with olive oil and season with salt and pepper
     3. Grill over direct medium heat for about 5 minutes, until tender
     4. Add additional seasoning if desired',
-    user_id: 2,
     category_id: 3}
 ]
 
