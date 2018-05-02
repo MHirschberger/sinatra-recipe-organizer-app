@@ -15,16 +15,16 @@
       <br></br>
 
       <label for="ingredients">Ingredients</label><br>
-      <textarea name="ingredients" value="<%= @recipe.ingredients %>" rows="20" cols="60" id="ingredients">
+      <input type="text" name="ingredients" value="<%= @recipe.ingredients %>" id="ingredients">
       <br></br>
 
       <label for="instructions">Instructions</label><br>
-      <textarea name="instructions" value="<%= @recipe.instructions %>" rows="40" cols="60" id="instructions">
+      <input type="text" name="instructions" value="<%= @recipe.instructions %>" id="instructions">
       <br></br>
 
       <label>Edit Category</label>
       <p>Select an existing category:</p>
-      <% Category.all.each do |category| %>
+      <% current_user.categories.each do |category| %>
         <input type="radio" name="category" value="<%= category.id %>" <%='checked' if @recipe.category == category %>>
         <label><%= category.name.titleize %></label><br>
       <% end %>

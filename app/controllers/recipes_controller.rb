@@ -2,7 +2,7 @@ class RecipesController < ApplicationController
 
   get '/recipes' do
     if logged_in?
-      @recipes = Recipe.all.sort_by {|recipe| recipe.name}
+      @recipes = current_user.recipes.sort_by {|recipe| recipe.name}
       erb :'recipes/index'
     else
       redirect to '/login'
@@ -26,7 +26,7 @@ class RecipesController < ApplicationController
         if params[:new_category] == ""
           @recipe.category_id = params[:category]
         else
-          @recipe.category = Category.find_or_create_by(name: params[:new_category])
+          @recipe.category = current_user.find_or_create_by(name: params[:new_category], user_id: current_user.id)
         end
         if @recipe.save
           redirect to "/recipes/#{@recipe.id}"
@@ -66,13 +66,19 @@ class RecipesController < ApplicationController
       if params[:recipe_name] == ""
         redirect to "/recipes/#{@recipe.id}/edit"
       else
-        @recipe = Recipe.find(params[:id])
-        if @recipe && @tweet.user == current_user
+        @recipe = current_user.recipes.find(params[:id])
+        if @recipe && @recipe.user == current_user
           if @recipe.update(name: params[:recipe_name], ingredients: params[:ingredients], instructions: params[:instructions])
             if params[:new_category] == ""
               @recipe.category_id = params[:category]
             else
-              @recipe.category = Category.find_or_create_by(name: params[:new_category])
+              binding.pry
+              @recipe.category = Category.find_or_create_by(name: params[:new_category], user_id: current_user.id)
+            end
+            current_user.categories.each do |category|
+              if category.recipes.empty?
+                current_user.categories.delete(category)
+              end
             end
             @recipe.save
             redirect to "/recipes/#{@recipe.id}"
@@ -97,6 +103,7 @@ class RecipesController < ApplicationController
       redirect to '/recipes'
     else
       redirect to '/login'
+
     end
   end
 

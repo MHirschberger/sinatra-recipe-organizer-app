@@ -80,12 +80,12 @@ recipes_data = [
     user_id: 2,
     category_id: 3},
   {name: 'Summer Salad',
-    ingredients: '1. Arugula and baby spinich, rinsed and spun dry
-    2. 1/4 cup crumbled gorgonzola cheese
-    3. 1/2 cup strawberries, rinsed and sliced
-    3. 1/4 cup sliced unsalted almonds
-    4. Extra virgin olive oil
-    5. Balsamic vinegar',
+    ingredients: 'Arugula and baby spinich, rinsed and spun dry
+    1/4 cup crumbled gorgonzola cheese
+    1/2 cup strawberries, rinsed and sliced
+    1/4 cup sliced unsalted almonds
+    Extra virgin olive oil
+    Balsamic vinegar',
     instructions: '1. Combine arugula, baby spinach, cheese, strawberries, and almonds
     2. Drizzle with olive oil and vinegar',
     user_id: 2,

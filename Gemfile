@@ -11,6 +11,7 @@ gem 'shotgun'
 gem 'pry'
 gem 'bcrypt'
 gem "tux"
+gem 'database_cleaner', git: 'https://github.com/bmabey/database_cleaner.git'
 
 group :test do
   gem 'rspec'
