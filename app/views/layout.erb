@@ -16,7 +16,10 @@
 <body>
   <div class="wrapper">
     <% if logged_in? %>
-      <p>Welcome, <%=current_user.username%>. <a href="/logout">Log Out</a></p> 
+      <p>Welcome, <%=current_user.username%>. <a href="/logout">Log Out</a></p>
+    <% end %>
+    <% if flash.has?(:message) %>
+      <br><%= flash[:message] %><br>
     <% end %>
       <%= yield %>
 

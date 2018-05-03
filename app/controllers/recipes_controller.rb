@@ -1,4 +1,8 @@
+require 'rack-flash'
+
 class RecipesController < ApplicationController
+
+  use Rack::Flash
 
   get '/recipes' do
     redirect_if_not_logged_in
@@ -33,7 +37,7 @@ class RecipesController < ApplicationController
     if @recipe && @recipe.category.user == current_user
       erb :'recipes/show'
     else
-      flash[:notice] = "Invalid Request"
+      flash[:message] = "Invalid Request"
       redirect to '/recipes'
     end
   end
@@ -44,7 +48,7 @@ class RecipesController < ApplicationController
     if @recipe && @recipe.category.user == current_user
       erb :'recipes/edit'
     else
-      flash[:notice] = "Invalid Request"
+      flash[:message] = "Invalid Request"
       redirect to '/recipes'
     end
   end
@@ -64,7 +68,7 @@ class RecipesController < ApplicationController
       delete_empty_categories
       redirect to "/recipes/#{@recipe.id}"
     else
-      flash[:notice] = "Invalid Request"
+      flash[:message] = "Invalid Request"
       redirect to '/recipes'
     end
   end

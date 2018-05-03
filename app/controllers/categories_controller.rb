@@ -12,7 +12,7 @@ class CategoriesController < ApplicationController
     if @category && @category.user == current_user
       erb :'categories/show'
     else
-      flash[:notice] = "Invalid Request"
+      flash[:message] = "Invalid Request"
       redirect to '/categories'
     end
   end
