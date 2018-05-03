@@ -13,20 +13,17 @@ class RecipesController < ApplicationController
 
   post '/recipes' do
     redirect_if_not_logged_in
-    if params[:recipe_name] == ""
-      redirect to "/recipes/new"
+    redirect_if_invalid_params
+    @recipe = current_user.recipes.build(name: params[:recipe_name], ingredients: params[:ingredients], instructions: params[:instructions])
+    if params[:new_category] == ""
+      @recipe.category_id = params[:category]
     else
-      @recipe = current_user.recipes.build(name: params[:recipe_name], ingredients: params[:ingredients], instructions: params[:instructions])
-      if params[:new_category] == ""
-        @recipe.category_id = params[:category]
-      else
-        @recipe.category = Category.find_or_create_by(name: params[:new_category], user_id: current_user.id)
-      end
-      if @recipe.save
-        redirect to "/recipes/#{@recipe.id}"
-      else
-        redirect to "/recipes/new"
-      end
+      @recipe.category = Category.find_or_create_by(name: params[:new_category], user_id: current_user.id)
+    end
+    if @recipe.save
+      redirect to "/recipes/#{@recipe.id}"
+    else
+      redirect to "/recipes/new"
     end
   end
 
@@ -48,26 +45,20 @@ class RecipesController < ApplicationController
 
   patch '/recipes/:id' do
     redirect_if_not_logged_in
-    if params[:recipe_name] == ""
-      redirect to "/recipes/#{@recipe.id}/edit"
-    else
-      @recipe = current_user.recipes.find(params[:id])
-      if @recipe && @recipe.category.user == current_user
-        if @recipe.update(name: params[:recipe_name], ingredients: params[:ingredients], instructions: params[:instructions])
-          if params[:new_category] == ""
-            @recipe.category_id = params[:category]
-          else
-            @recipe.category = Category.find_or_create_by(name: params[:new_category], user_id: current_user.id)
-          end
-          @recipe.save
-          delete_empty_categories
-          redirect to "/recipes/#{@recipe.id}"
-        else
-          redirect to "/recipes/#{@recipe.id}/edit"
-        end
+    redirect_if_invalid_params
+    @recipe = current_user.recipes.find(params[:id])
+    if @recipe && @recipe.category.user == current_user
+      @recipe.update(name: params[:recipe_name], ingredients: params[:ingredients], instructions: params[:instructions])
+      if params[:new_category] == ""
+        @recipe.category_id = params[:category]
       else
-        redirect to '/recipes'
+        @recipe.category = Category.find_or_create_by(name: params[:new_category], user_id: current_user.id)
       end
+      @recipe.save
+      delete_empty_categories
+      redirect to "/recipes/#{@recipe.id}"
+    else
+      redirect to '/recipes'
     end
   end
 

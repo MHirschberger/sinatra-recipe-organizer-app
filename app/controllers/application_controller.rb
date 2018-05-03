@@ -32,6 +32,12 @@ class ApplicationController < Sinatra::Base
       end
     end
 
+    def redirect_if_invalid_params
+      if params[:recipe_name].empty? || (params[:category].empty? && params[:new_category].empty?)
+        redirect to "/recipes/#{@recipe.id}/edit?error=A recipe must have a name and category"
+      end
+    end
+
     def delete_empty_categories
       current_user.categories.each do |category|
         if category.recipes.empty?
@@ -39,7 +45,7 @@ class ApplicationController < Sinatra::Base
         end
       end
     end
-    
+
   end
 
 end
