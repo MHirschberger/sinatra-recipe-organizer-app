@@ -32,7 +32,14 @@ class ApplicationController < Sinatra::Base
       end
     end
 
-    def
+    def delete_empty_categories
+      current_user.categories.each do |category|
+        if category.recipes.empty?
+          current_user.categories.delete(category)
+        end
+      end
+    end
+    
   end
 
 end

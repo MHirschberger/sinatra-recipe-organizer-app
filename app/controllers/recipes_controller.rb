@@ -60,11 +60,7 @@ class RecipesController < ApplicationController
             @recipe.category = Category.find_or_create_by(name: params[:new_category], user_id: current_user.id)
           end
           @recipe.save
-          current_user.categories.each do |category|
-            if category.recipes.empty?
-              current_user.categories.delete(category)
-            end
-          end
+          delete_empty_categories
           redirect to "/recipes/#{@recipe.id}"
         else
           redirect to "/recipes/#{@recipe.id}/edit"
@@ -80,11 +76,7 @@ class RecipesController < ApplicationController
     @recipe = Recipe.find(params[:id])
     if @recipe && @recipe.category.user == current_user
       @recipe.delete
-      current_user.categories.each do |category|
-        if category.recipes.empty?
-          current_user.categories.delete(category)
-        end
-      end
+      delete_empty_categories
     end
     redirect to '/recipes'
   end
