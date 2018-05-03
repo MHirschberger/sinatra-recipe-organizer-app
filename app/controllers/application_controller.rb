@@ -28,13 +28,15 @@ class ApplicationController < Sinatra::Base
 
     def redirect_if_not_logged_in
       if !logged_in?
-        redirect "/login?error=You have to be logged in to do that"
+        flash[:notice] = "Not Authorized. Please login."
+        redirect "/login"
       end
     end
 
     def redirect_if_invalid_params
       if params[:recipe_name].empty? || (params[:category].empty? && params[:new_category].empty?)
-        redirect to "/recipes/#{@recipe.id}/edit?error=A recipe must have a name and category"
+        flash[:notice] = "Name And Category Required For New Recipe"
+        redirect to "/recipes/#{@recipe.id}/edit"
       end
     end
 

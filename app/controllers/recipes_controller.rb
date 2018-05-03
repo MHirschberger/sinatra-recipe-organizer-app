@@ -30,7 +30,12 @@ class RecipesController < ApplicationController
   get '/recipes/:id' do
     redirect_if_not_logged_in
     @recipe = Recipe.find(params[:id])
-    erb :'recipes/show'
+    if @recipe && @recipe.category.user == current_user
+      erb :'recipes/show'
+    else
+      flash[:notice] = "Invalid Request"
+      redirect to '/recipes'
+    end
   end
 
   get '/recipes/:id/edit' do
@@ -39,6 +44,7 @@ class RecipesController < ApplicationController
     if @recipe && @recipe.category.user == current_user
       erb :'recipes/edit'
     else
+      flash[:notice] = "Invalid Request"
       redirect to '/recipes'
     end
   end
@@ -46,7 +52,7 @@ class RecipesController < ApplicationController
   patch '/recipes/:id' do
     redirect_if_not_logged_in
     redirect_if_invalid_params
-    @recipe = current_user.recipes.find(params[:id])
+    @recipe = Recipe.find(params[:id])
     if @recipe && @recipe.category.user == current_user
       @recipe.update(name: params[:recipe_name], ingredients: params[:ingredients], instructions: params[:instructions])
       if params[:new_category] == ""
@@ -58,6 +64,7 @@ class RecipesController < ApplicationController
       delete_empty_categories
       redirect to "/recipes/#{@recipe.id}"
     else
+      flash[:notice] = "Invalid Request"
       redirect to '/recipes'
     end
   end
