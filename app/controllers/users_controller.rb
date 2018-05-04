@@ -39,7 +39,7 @@ class UsersController < ApplicationController
 
   get '/index' do
     if logged_in?
-      @user = User.find(current_user.id)
+      @user = User.find_by_id(current_user.id)
       erb :'users/index'
     else
       redirect to '/login'

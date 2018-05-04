@@ -33,7 +33,7 @@ class RecipesController < ApplicationController
 
   get '/recipes/:id' do
     redirect_if_not_logged_in
-    @recipe = Recipe.find(params[:id])
+    @recipe = Recipe.find_by_id(params[:id])
     if @recipe && @recipe.category.user == current_user
       erb :'recipes/show'
     else
@@ -44,7 +44,7 @@ class RecipesController < ApplicationController
 
   get '/recipes/:id/edit' do
     redirect_if_not_logged_in
-    @recipe = Recipe.find(params[:id])
+    @recipe = Recipe.find_by_id(params[:id])
     if @recipe && @recipe.category.user == current_user
       erb :'recipes/edit'
     else
@@ -56,7 +56,7 @@ class RecipesController < ApplicationController
   patch '/recipes/:id' do
     redirect_if_not_logged_in
     redirect_if_invalid_params
-    @recipe = Recipe.find(params[:id])
+    @recipe = Recipe.find_by_id(params[:id])
     if @recipe && @recipe.category.user == current_user
       @recipe.update(name: params[:recipe_name], ingredients: params[:ingredients], instructions: params[:instructions])
       if params[:new_category] == ""
@@ -75,7 +75,7 @@ class RecipesController < ApplicationController
 
   delete '/recipes/:id/delete' do
     redirect_if_not_logged_in
-    @recipe = Recipe.find(params[:id])
+    @recipe = Recipe.find_by_id(params[:id])
     if @recipe && @recipe.category.user == current_user
       @recipe.delete
       delete_empty_categories
