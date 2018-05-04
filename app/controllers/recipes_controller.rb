@@ -83,6 +83,8 @@ class RecipesController < ApplicationController
     if @recipe && @recipe.category.user == current_user
       @recipe.delete
       delete_empty_categories
+    else
+      flash[:message] = "Invalid Request"
     end
     redirect to '/recipes'
   end
