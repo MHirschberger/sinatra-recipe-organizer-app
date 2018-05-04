@@ -32,10 +32,9 @@ class ApplicationController < Sinatra::Base
       end
     end
 
-    def redirect_if_invalid_params
+    def invalid_params
       if params[:recipe_name].empty? || (params[:category].empty? && params[:new_category].empty?)
-        flash[:message] = "Name And Category Required For New Recipe"
-        redirect to "/recipes/#{@recipe.id}/edit"
+        flash[:message] = "Name And Category Required For Recipe"
       end
     end
 

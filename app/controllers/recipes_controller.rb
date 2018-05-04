@@ -17,7 +17,9 @@ class RecipesController < ApplicationController
 
   post '/recipes' do
     redirect_if_not_logged_in
-    redirect_if_invalid_params
+    if invalid_params
+      redirect to "/recipes/new"
+    end
     @recipe = current_user.recipes.build(name: params[:recipe_name], ingredients: params[:ingredients], instructions: params[:instructions])
     if params[:new_category] == ""
       @recipe.category_id = params[:category]
@@ -55,8 +57,10 @@ class RecipesController < ApplicationController
 
   patch '/recipes/:id' do
     redirect_if_not_logged_in
-    redirect_if_invalid_params
     @recipe = Recipe.find_by_id(params[:id])
+    if invalid_params
+      redirect to "/recipes/#{@recipe.id}/edit"
+    end
     if @recipe && @recipe.category.user == current_user
       @recipe.update(name: params[:recipe_name], ingredients: params[:ingredients], instructions: params[:instructions])
       if params[:new_category] == ""
