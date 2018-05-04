@@ -1,4 +1,15 @@
 * {
   font-family: Verdana;
+  box-sizing: border-box;
   background-color: Cornsilk;
+}
+
+.error {
+  vertical-align: middle;
+  font-weight: bold;
+  color: #cc0000;
+  background-color: #ffcccc;
+  padding: 10px;
+  border-radius: 10px;
+  border-color: #cc0000;
 }

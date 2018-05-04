@@ -19,8 +19,13 @@
       <p>Welcome, <%=current_user.username%>. <a href="/logout">Log Out</a></p>
     <% end %>
     <% if flash.has?(:message) %>
-      <br><%= flash[:message] %><br>
+      <br>
+      <div class="error">
+      <%= flash[:message] %>
+      </div>
+      <br>
     <% end %>
+
       <%= yield %>
 
   </div>
