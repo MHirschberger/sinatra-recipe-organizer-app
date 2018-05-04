@@ -1,14 +1,19 @@
-<h2>Users</h2>
-
-<% unless locals.empty? %>
-  <%= message %>
-<% end %>
-
-
-<h3>Sign Up</h3>
-<form action="/signup" method="POST">
-  <p>Username: <input type="text" name="username"></p>
-  <p>Email: <input type="text" name="email"></p>
-  <p>Password: <input type="password" name="password"></p>
-  <input type="submit" value="Create Account">
-</form>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>Welcome to Recipe Organizer!</h1>
+    <h2>Sign Up</h2>
+    <form action="/signup" method="POST">
+      <p>Username: <input type="text" name="username"></p>
+      <p>Email: <input type="text" name="email"></p>
+      <p>Password: <input type="password" name="password"></p>
+      <input type="submit" value="Create Account">
+      <br></br>
+      Already have an account? <a href="/login">Login here!</a>
+    </form>
+  </body>
+</html>

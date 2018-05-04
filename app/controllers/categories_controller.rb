@@ -1,4 +1,8 @@
+require 'rack-flash'
+
 class CategoriesController < ApplicationController
+
+  use Rack::Flash
 
   get '/categories' do
     redirect_if_not_logged_in
