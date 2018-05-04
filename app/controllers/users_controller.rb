@@ -16,6 +16,12 @@ class UsersController < ApplicationController
     if params[:username] == "" || params[:email] == "" || params[:password] == ""
       flash[:message] = "Username, Email, And Password Required To Create Account"
       redirect to '/signup'
+    elsif User.find_by(username: params[:username])
+      flash[:message] = "Username Already Taken. Signup Using Another Username Or Login."
+      redirect to '/signup'
+    elsif User.find_by(email: params[:email])
+      flash[:message] = "Email Address Already Taken. Signup Using Another Email Address Or Login."
+      redirect to '/signup'
     else
       @user = User.new(:username => params[:username], :email => params[:email], :password => params[:password])
       @user.save
