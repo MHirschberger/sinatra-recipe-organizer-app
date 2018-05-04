@@ -1,6 +1,6 @@
 # Recipe Organizer App
 
-Recipe Organizer is a web app that allows a user to create and store their personal recipes and to categorize them as desired. Recipes can browse their stored recipes either all at once by title in alphabetical order or by category. Users can update and delete stored recipes as needed.
+Recipe Organizer is a web app that allows a user to create and store their personal recipes and to categorize them as desired. Users can browse their stored recipes either all at once by title in alphabetical order or by category. Users can update and delete stored recipes as needed as well as edit their categories.
 
 ## Installation and Usage
 
