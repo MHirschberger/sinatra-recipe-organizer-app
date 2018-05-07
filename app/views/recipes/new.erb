@@ -23,14 +23,15 @@
       <label>Category</label><br>
       <% if current_user.categories.empty? %>
         <p> You currently have no categories saved. Please create a new category below. </p><br>
+        <input type="hidden" name="category" value="none">
       <% else %>
         <p>Select category for recipe:</p>
         <% current_user.categories.each do |category| %>
-          <input type="radio" name="category" value="<%= category.id %>">
+          <input type="radio" name="category" value="<%= category.id %>" checked="checked" >
           <label><%= category.name.titleize %></label><br>
         <% end %>
       <% end %>
-      <p>Create new category:</p>
+      <p>Create new category (Note: Any entry here will override the category selection above):</p>
       <input type="text" name="new_category">
       <br></br>
       <input type="submit" value="Create Recipe">

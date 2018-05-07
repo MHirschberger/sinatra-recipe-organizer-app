@@ -17,6 +17,7 @@ class RecipesController < ApplicationController
 
   post '/recipes' do
     redirect_if_not_logged_in
+    binding.pry
     if invalid_params
       redirect to "/recipes/new"
     end
